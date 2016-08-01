@@ -28,7 +28,7 @@ Edit your `package.json` and make sure you have at least the following:
     "heroku-prebuild": "scripts/deployment_react.sh",
     "heroku-postbuild": "scripts/deployment_cleanup.sh",
     "start": "node server.js",
-    "rebuild": "webpack -d --progress --colors"
+    "rebuild": "webpack -d --progress --colors",
     "watch": "webpack -d --watch --progress --colors"
   },
 ```
