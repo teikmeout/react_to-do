@@ -1,3 +1,4 @@
+#Static React
 ### Learning Objectives
  - [ ] Decompose a static HTML design layout into React components
  - [ ] Investigate the difference between Stateful React Classes and Stateless React Functions
@@ -38,8 +39,7 @@ Let's start creating our first React components. We'll need the proper folder la
   1. `/src/client/app` is where your application will live. 
   2. Webpack will start looking at `/src/client/app/main.jsx` to begin the compilation. 
   2. `App.jsx` is the 'root' of your React application
-  3. Copy `starter_resources/styles.css` into `/src/client/css`
-  3. Create a blank file `/src/client/helpers/util.js` (git ignores empty folders)
+  3. Create a blank file `/src/client/helpers/util.js` (git ignores empty folders, we'll fill it out later)
 
 
 ### Step 3

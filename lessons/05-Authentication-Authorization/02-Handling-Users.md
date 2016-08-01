@@ -22,3 +22,4 @@ const salt    = bcrypt.genSaltSync(10);  // create a string that has been hashed
 We'll need a function to actually hash our 
 
 
+ - promote the AjaxHandler to a TaskAjaxService
