@@ -36,7 +36,7 @@ Let's start creating our first React components. We'll need the proper folder la
         └── util.js
 ```
 
-  1. `/src/client/app` is where your application will live. 
+  1. `/src/client/app` is where your application source will live. 
   2. Webpack will start looking at `/src/client/app/main.jsx` to begin the compilation. 
   2. `App.jsx` is the 'root' of your React application
   3. Create a blank file `/src/client/helpers/util.js` (git ignores empty folders, we'll fill it out later)
@@ -71,11 +71,12 @@ export default class App extends React.Component{
         return(
             <container>
                 <header>
-                    <p>Hello world example</p>
+                    <nav>navigation here</nav>
                 </header>
                 <div className="container">
                     <div className="row">
                     {/*everything goes in here*/}
+                        <p>Hello world example</p>
                     </div>
                 </div>
             </container>

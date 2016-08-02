@@ -1,6 +1,6 @@
-#Exercise 1. Build a Basic Node.js/ Express.js Server with Multiple Routes. 
+#Exercise 1. Build a Basic Node.js / Express.js Server with Multiple Routes. 
 
-Hint: In this directory, touch a file called `server.js`, and `npm init`. Follow with `npm install express --save`.
+Hint: In this directory, touch a file called `server.js`, and `npm i`.
 
 
 ##Your server should fulfill the following criteria:
