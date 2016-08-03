@@ -22,7 +22,7 @@ Open `starter_resources/layout.html` in Chrome.
   6. BONUS: How does the state of the database correlate with the state of the application?
 
 ### Step 2 
-Let's start creating our first React components. We'll need the proper folder layout that our compiler is expecting:
+Let's start creating our first React components. We'll need the proper folder layout that webpack is expecting:
 
 ```
 /src
@@ -33,7 +33,10 @@ Let's start creating our first React components. We'll need the proper folder la
     ├── css
     │   └── styles.css
     └── helpers
-        └── util.js
+    |   └── util.js
+    └── images
+        └── GA_gear.png
+        └── GA_logo.png
 ```
 
   1. `/src/client/app` is where your application source will live. 
@@ -51,6 +54,8 @@ import App from './App.jsx';
 require('bootstrap/dist/css/bootstrap.css');
 require('../css/styles.css')
 ```
+
+
 
 We'll need to create a wrapper for our _stateful_ core component that uses React. **We'll be using es6 _class_ syntax to build our components.** 
 
@@ -93,13 +98,11 @@ ReactDOM.render(<App />, document.querySelector('#container'))
 ### Step 4 The easy parts
 Let's convert some of the easiest parts of the site into React.
 
-The most trivial part of the website is the navigation bar. The nav bar doesn't and shouldn't have a concept of _state_; it doesn't need to react to changes in state. 
+The most trivial part of the website is the navigation bar. The nav bar doesn't and shouldn't have a concept of _state_; it should only receive props that were given to it by the caller.
 
 Let's create the Nav component as a _stateless function_: `/src/client/app/Nav.jsx`.
 
 ```
-import React from 'react';
-
 export default function Nav(props){
   return 
   <nav>
@@ -107,8 +110,15 @@ export default function Nav(props){
   </nav>
 }
 ``` 
+or in pure es6
+```
+export default Nav = props=> 
+  <nav>
+    {/* slice out the nav from the layout template.*/}
+  </nav>
+```
 
-Make sure to **`import`** this new component in `App.jsx`!
+Make sure to **`import`** this new component in `App.jsx`, and use the appropriate JSX tag in your App.
 
 ###Step 5 The Rest
 
