@@ -5,14 +5,6 @@
  - [ ] Investigate when to use state vs. props
  - [ ] Justify storing Objects with keys as state instead of array
 
-
-##Get organized
-_NOTE:_ Before we continue, it will be easier to have three (3) terminal windows open to the same directory. This will allow us to work without swapping tons of windows. It might also be a good idea to open your browser to full-screen on another desktop. Also, now would be a good time to make sure your database is running. 
-
-We'll need each one to do the following:
- 1. One for our normal terminal window where we can work with git; 
- 2. One for `webpack`, which will watch the `src` folder for changes and auto-rebuild our react app. 
- 3. One for `nodemon`, which will watch our root folder for changes and auto-restart our node server (the step above usually triggers this step.) 
  
 ##Where are we now?
 Now that you have the template sliced up into React, we should be able to `npm run rebuild` to rebuild the app. 
@@ -27,9 +19,6 @@ import Nav              from './Nav.jsx'
 import Footer           from './Footer.jsx'
 import TaskForm         from './TaskForm.jsx'
 import TaskList         from './TaskList.jsx'
-
-import util             from '../helpers/util.js'
-
 
 // create a React Component Class called _App_
 export default class App extends React.Component{
@@ -100,6 +89,72 @@ The other components we've built should be `import`ed here (see `Nav`, `TaskList
 
 
 
-##Step 1: Make it Dynamic
-Now that we have all the components in place and organized, we should be able  
+#Make it Dynamic
+Now that we have all the components in place and organized we can start making this dynamic.
+
+>You're still watching using `npm run watch`, right??. 
+
+##Step 1: Build out the TaskForm
+Let's tackle  ~~our fears~~ our form. Our form should take input and create a new task. Notice that submitting a form automatically reloads the page. This is because the `submit` event bubbles up to the window, and the window responds with a page reload... Let's fix this.
+
+####The Form
+Inside of the `TaskForm` component, we'll need a function that will handle the submission, hide all the complexity and transmit our form's data. Let's call it `handleSubmit`:
+
+```javascript
+const TaskForm = props=>{
+
+  /* let's handle all our dirty laundry here, 
+  and present a clean face to the rest of the app*/
+
+  const handleSubmit = event=>{
+    event.preventDefault();
+    console.log('form submitted')
+    /* DEV TODO: collect the form elements into an object literal called newTask */
+  }
+
+  return (
+  <section className="jumbotron">
+    <h1>Task Manager</h1>
+    <form className="form-inline" onSubmit={handleSubmit}>
+...
+  )
+}
+
+```
+>`handleSubmit` lives within the `TaskForm` and serves as a way of managing the form data before it's submitted. 
+
+We'll wire our new method into the form via the `onSubmit` event handler of the form.
+
+####The Form Data
+
+We need to grab the form data and submit it via AJAX. Conveniently, our form elements are stored in an object called `elements`. 
+
+#####YOU DO: 
+  1. Inside `handleSubmit`, create a `newTask` that collects all the form data. 
+  2. `console.log` the new object when the form is submitted.
+  3. Reset the form.
+
+#####Check for Understanding: 
+  1. Why don't we just set the event to trigger when the button is clicked?
+  2. Could we just send the entire form to the app and let it figure out what to do? 
+
+
+###Step 2: Update the State
+We have the new task, and we need to update our state. BUT, we need to transmit this data up to our state, and our state is up in the App, but this action is down in the form. What should we do? 
+
+####Props!
+We can pass function references down to any component through props (the named attributes of our XML/JSX). For example:
+```
+<ComponentName propName={functionReference} prop2={f2Reference} />
+```
+
+####Mutators
+Before we make these connections, let's first make a function to pass in. We have to make a mutator method that takes `newTask` and updates our state:
+
+#####You Do:
+  1. Create a new method in `App.jsx`   
+
+
+
+
 

@@ -44,7 +44,8 @@ const config = {
     loaders: [
       { test: /\.css$/,  loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
       { test: /\.(png|gif|jpg)$/,  loader: 'file-loader?name=/images/[name].[ext]' },
-      { test: /\.jsx?$/, loader: 'babel'       },
+      { test: /\.ico$/,  loader: 'file-loader?name=/[name].[ext]' },
+      { test: /\.jsx?$/, loader: 'babel' },
       {
         test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader?limit=100&mimetype=application/font-woff&name=/fonts/[name].[ext]'

@@ -95,6 +95,16 @@ ReactDOM.render(<App />, document.querySelector('#container'))
 
 **NOTE** Certain HTML attributes interfere with React. As such, we cannot use `class=` or `for=`, instead use `className=` and `htmlFor=` respectively.
 
+
+##Get organized
+_NOTE:_ Before we continue, it will be easier to have three (3) terminal windows open to the same directory. This will allow us to work without swapping tons of windows. It might also be a good idea to open your browser to full-screen on another desktop. Also, now would be a good time to make sure your database is running. 
+
+We'll need each one to do the following:
+ 1. One for our normal terminal window where we can work with git; 
+ 2. One for `webpack`, which will watch the `src` folder for changes and auto-rebuild our react app. 
+ 3. One for `nodemon`, which will watch our root folder for changes and auto-restart our node server (the step above usually triggers this step.) 
+
+
 ### Step 4 The easy parts
 Let's convert some of the easiest parts of the site into React.
 
@@ -118,11 +128,14 @@ export default Nav = props=>
   </nav>
 ```
 
-Make sure to **`import`** this new component in `App.jsx`, and use the appropriate JSX tag in your App.
+Make sure to **`import`** this new component in `App.jsx`, and use the appropriate JSX tag in your App. Test your syntax by slowly adding each component one-by-one, and fixing any errors.
+
+> The most common mistake here is to use the HTML `class=` attribute. JSX does **not** like this. Change all the `class=` to `className=`.
+
 
 ###Step 5 The Rest
 
-Repeat the steps above to build out the 
+Repeat the steps above to build out the rest
   1. `Footer`
   2. `TaskForm`
   3. `TaskList`
