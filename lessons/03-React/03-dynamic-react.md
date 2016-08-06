@@ -142,19 +142,48 @@ We need to grab the form data and submit it via AJAX. Conveniently, our form ele
 ###Step 2: Update the State
 We have the new task, and we need to update our state. BUT, we need to transmit this data up to our state, and our state is up in the App, but this action is down in the form. What should we do? 
 
-####Props!
+####Mutators?
+Before we go forward, let's first make a new method on our App. We have to make a _mutator_ method that takes `newTask` and updates our state:
+
+#####You Do:
+  1. Create a new method in `App.addTask( newTask )` that takes the `newTask` and saves it to the state. Eventually we'll get our tasks from a DB using AJAX, which will come with a completed status and a unique ID, but for now we'll simulate that:
+```
+    // TODO: send this change to the db (ajax)
+    // simulate the completed state and create a unique ID using the surrent timestamp
+    newTask.completed = false
+    newTask.task_id = Date.now()
+```
+  2. Our `addTask` method must update (mutate) our state —but— we have a problem: React dictates that we must NEVER directly change the state. One way to get around this is to create a function that describes the transition from the previous state to the next state.
+```
+this.setState( previousState=>{
+  previousState.tasks[newTask.task_id]=newTask
+  return previousState
+})
+```
+
+Now that we have a mutator, let's pass it down through _props_:
+
+### Step 3: Pass Props
 We can pass function references down to any component through props (the named attributes of our XML/JSX). For example:
 ```
 <ComponentName propName={functionReference} prop2={f2Reference} />
 ```
+  1. In `App.jsx`, we've instantiated `<TaskForm />`. Let's pass in a reference to this new method we just created. 
+  `<TaskForm addTask={this.addTask}/>`
+ >Test this and you'll see an immediate error. Why is this happening? The `App.addTask` method references `this.state`. [Remember that](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch2.md) this is dynamic and its value is determined by how its called. When we separate a method from its class/object, and call it as a function in a separate context, `this` loses its meaning. 
 
-####Mutators
-Before we make these connections, let's first make a function to pass in. We have to make a mutator method that takes `newTask` and updates our state:
+ >To fix this, we can `.bind()` the function to the current `this` context.
+   2. Let's bind the `addTask` function to its parent object so that we later have access to `App`'s `this` scope: 
+   `<TaskForm addTask={this.addTask.bind(this)}/>`
+   3. Test and check the React panel to see that the state gets updated.
+
+### Step 4: Pass our State as props to each `TaskList` so they can rerender themselves when the state changes. 
+  1. `<TaskList tasks={this.state.tasks} />`
 
 #####You Do:
-  1. Create a new method in `App.jsx`   
+  1. In `TaskList`, we need to iterate over the tasks and display them as buttons.
+  2. Use `[Array].map()` to iterate over our object. (hint `Object.keys()` gets an array of the object's keys)
+  3. return a new `<button>` with each iteration. 
 
-
-
-
+>**Tip:** Be sure to give each new `<button>` a unique key so that React can track it efficiently. 
 
