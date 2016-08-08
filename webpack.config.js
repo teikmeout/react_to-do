@@ -8,7 +8,7 @@ const BUILD_DIR         = path.resolve(__dirname, 'dist');
 const APP_DIR           = path.resolve(__dirname, 'src/client/app');
 
 const config = {
-  entry: `${APP_DIR}/main.jsx`,
+  entry: `${APP_DIR}/main.js`,
   output: {
     path: BUILD_DIR,
     filename: '/js/[name].js',

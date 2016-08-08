@@ -11,7 +11,7 @@ Now that you have the template sliced up into React, we should be able to `npm r
 
 Your `App.jsx` should look something like this:
 
-```
+```javascript
 // import the libs we need
 import React            from 'react'
 import ReactDOM         from 'react-dom'
@@ -185,5 +185,5 @@ We can pass function references down to any component through props (the named a
   2. Use `[Array].map()` to iterate over our object. (hint `Object.keys()` gets an array of the object's keys)
   3. return a new `<button>` with each iteration. 
 
->**Tip:** Be sure to give each new `<button>` a unique key so that React can track it efficiently. 
+>**ProTip:** Be sure to give each new `<button>` a unique key so that React can track it efficiently. 
 
