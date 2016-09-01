@@ -1,4 +1,4 @@
-# Dynamic React, Pt 2
+# Dynamic React: Function Composition and Component Reusability
 ###Learning Objectives
  - [ ] Use function composition to simplify complex behavior
  - [ ] Create layers of abstraction to hide and contain complexity
@@ -16,12 +16,14 @@ But, our lists aren't accurate: one list is supposed to show open (uncompleted) 
 In `TaskList`, before we run the `.map()`, we'll need to filter out the completed tasks. 
 >Remember, that [`Array.filter()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) takes a function that allows us to take certain items from an array that match a Boolean expression
 
+####TaskList.jsx
 ```javascript
 return (
   <div className="list-group">
     {Object.keys(props.tasks)
       .filter(task=>!task.completed)
-      .map(createButton)}
+      .map(createButton)
+    }
   </div>
 )
 ```

@@ -53,42 +53,72 @@
             <input type="text" class="form-control input-lg" id="task_desc" placeholder="Task Description">
           </div>
 
-          <button type="submit" class="btn btn-info btn-lg">Add Task</button>
+          <button type="submit" class="btn btn-danger btn-lg">Add Task</button>
         </form>
       </section>
 
       <section class="row">
-        <article class="col-md-6">
+        <article class="col-md-5">
           <h3>Open Items</h3>
           <div class="list-group">
             <button type="button" class="list-group-item" title="Click to Complete"><strong>Cras</strong> justo odio</button>
             <button type="button" class="list-group-item" title="Click to Complete"><strong>Dapibus</strong> ac facilisis in</button>
             <button type="button" class="list-group-item" title="Click to Complete"><strong>Morbi</strong> leo risus</button>
             <button type="button" class="list-group-item" title="Click to Complete"><strong>Porta</strong> ac consectetur ac</button>
-            <button type="button" class="list-group-item" title="Click to Complete"><strong>Vestibulum</strong> at eros</button>
+
+            <aside class="well well-sm">
+              <form class="form-inline">
+                <div class="form-group">
+                  <label class="sr-only" for="task_name">Task Name</label>
+                  <input type="text" class="form-control input-sm" name="task_name" placeholder="Task Name" value="Default Name">
+                </div>
+                <div class="form-group">
+                  <label class="sr-only" for="task_desc">Task Description</label>
+                  <input type="text" class="form-control input-sm" name="task_desc" placeholder="Task Description" value="Default Description">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                <button type="reset" class="btn btn-link btn-sm">Cancel</button>
+              </form>
+            </aside>
+
           </div>
         </article>
 
-        <article class="col-md-6">
+        <article class="col-md-5">
           <h3>Completed Items</h3>
           <div class="list-group">
             <button type="button" class="list-group-item" title="Click to Reopen"><strong>Cras</strong> justo odio
-              <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+              <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
             </button>
             <button type="button" class="list-group-item" title="Click to Reopen"><strong>Dapibus</strong> ac facilisis in
-              <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
             </button>
             <button type="button" class="list-group-item" title="Click to Reopen"><strong>Morbi</strong> leo risus
-              <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
             </button>
             <button type="button" class="list-group-item" title="Click to Reopen"><strong>Porta</strong> ac consectetur ac
-              <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
             </button>
             <button type="button" class="list-group-item" title="Click to Reopen"><strong>Vestibulum</strong> at eros
+              <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+            </button>
+          </div>
+        </article>
+
+
+        <article class="col-md-2">
+          <h3>Deleted Items</h3>
+          <div class="list-group">
+            <button type="button" class="list-group-item" title="Click to Restore"><strong>Cras</strong> justo odio
+              <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+            </button>
+            <button type="button" class="list-group-item" title="Click to Restore"><strong>Dapibus</strong> ac facilisis in
               <a class="pull-right" title="Click to Delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
             </button>
           </div>
         </article>
+
       </section>
     </div>
     <footer class="footer">

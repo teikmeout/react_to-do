@@ -40,13 +40,13 @@ NODE_ENV=development
 
 
 ## The part where the queries comes in.
- 1. Back in `/models/task.js`, export an unnamed object with methods that will serve as middleware.
-   1. `module.exports = {}`
- 3. In `/routes/`, import your middleware from `/models/task.js`; name it `db`. 
- 4. Build out your middleware with methods to interact with the database. Any results should be set to `res.rows`. (hint: CRUD)
- 5. In your `/routes/tasks.js`, insert your new middleware in each of the corresponding routes.
- 6. Your database methods are now updated and useable. 
+  1. Back in `/models/task.js`, export an unnamed object with methods that will serve as middleware.
+    1. `module.exports = {}`
+  3. In `/routes/`, import your middleware from `/models/task.js`; name it `db`. 
+  4. Build out your middleware with methods to interact with the database. Any results should be set to `res.rows`. (hint: CRUD)
+  5. In your `/routes/tasks.js`, insert your new middleware in each of the corresponding routes.
+  6. Your database methods are now updated and useable. 
 
 ## Test away!
- 7. Your new API ONLY accepts `application/json`. Try creating some records. What happens if you delete something?
+  7. Your new API ONLY accepts `application/json`. Try creating some records. What happens if you delete something?
 

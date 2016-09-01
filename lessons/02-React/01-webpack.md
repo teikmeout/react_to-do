@@ -36,7 +36,7 @@ Towards the top of the file, we have the `entry`point for webpack. This is where
 
 ```javascript
 const config = {
-  entry: `${APP_DIR}/main.jsx`,
+  entry: `${APP_DIR}/main.js`,
   output: {
     path: BUILD_DIR,
     filename: '/js/[name].js',
