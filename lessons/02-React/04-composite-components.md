@@ -74,7 +74,7 @@ We've got all our functionality, but clicking on the buttons doesn't do anything
 Let's make a mutator for toggling tasks. Clicking any button should swap Boolen value of `task.completed`. 
 
 #####You Do:
-  1. In `App`, create a new mutator method that toggles the `completed` key of each task. _Hint: this method is almost identical to the `addTask` method. `previousState.tasks[task_id].completed = !previousState.tasks[task_id].completed`
+  1. In `App`, create a new mutator method that toggles the `completed` key of each task. _Hint: this method is almost identical to the `addTask` method. `previousState.tasks[taskID].completed = !previousState.tasks[taskID].completed`
   2. Update the `TaskList` JSX to include a new prop, `buttonClick` and pass your new method.
   3. Don't forget to `.bind(this)` since we're refrencing `this.state` in the method.
 
@@ -98,12 +98,12 @@ const TaskList = props=>
 
   <div className="list-group">
     {Object.keys(props.tasks)
-      .filter(key=>props.filter(props.tasks[key]))
-      .map(key=>
+      .filter(taskID=>props.filter(props.tasks[taskID]))
+      .map(taskID=>
         <Task
-          key={key}
-          onClick={event=>props.buttonClick(key)}
-          task={props.tasks[key]} />
+          key={taskID}
+          onClick={event=>props.buttonClick(taskID)}
+          task={props.tasks[taskID]} />
       )}
   </div>
 
@@ -131,29 +131,33 @@ const Task = props=>
 export default Task
 
 ```
-> Notice that `Task` has no idea about `key` only `props.task`, and any children passed in. 
+> Notice that `Task` has no direct access to `key` only `props.task`, and any children passed in. 
 
 
 Notice that in the layout reference, only the completed `TaskList` contains a 'delete button'. How can we add specific links to only one instance of `TaskList`? 
 
-#####You Do:
-  1. Create `App.deleteTask(task_id)` method.
-  2. This method should be almost the same as `toggleTask`, except we're going to toggle `previousState[task_id].deleted` 
+#####You Do (10 minutes):
+  1. Create `App.toggleDelete(taskID)` method.
+  2. This method should be almost the same as `toggleTask`, except we're going to toggle `this.state[taskID].deleted` 
 
 ##Step 3. Create Child Nodes
-Open up  `layout.html` and take a look at the realtionship between the `<button />` and the `delete` link. It's a parent/child relationship. When we nest JSX (like X/HTML), we create a parent/child relationship. 
 
-The nested child JSX is referenced by the parent as `props.children`. To build on the example, we could simply add our `<a/>` tag here, but it will look ugly and complicated, and also mix lots of concerns. Let's create a new component to wrap our links. 
+Open up  `layout.html` and take a look at the relationship between the `<button />` and its child links (the `delete` and `edit` links). It's a parent/child relationship. When we nest JSX (like XML or HTML), we create a parent/child relationship: the nested child JSX is referenced by the parent as `props.children`. Each of our `Task`s has varying quantities of children, depending within which `TaskList` it appears. For example, `Task`s in the 'open' `TaskList`, contain one child (edit), while `Task`s in the 'completed' list contain two children (edit & delete). We should be able to declare and pass the children from `App` down into our `TaskList` factory and have them applied to each `Task`. Let's create a new component to wrap our links. 
 
-#####You Do:
-  1. Create a new stateless component called `DeleteButton.jsx` in the same fashion as `Task`. Use One of the delete html links from `layout.html`. 
-  2. Within the `DeleteButton` function, create another function, `handleClick(event)`. 
-  3. `handleClick(event)` should stop the event's propagation and fire the `click` provided by the props (we'll cover the click event next).
-  4. Create `App.deleteTask(task_id)` that will behave identically to `toggleTask`, except it'll toggle `task.deleted`.
-  5. Include your newly-minted `DeleteButton` as a child of `TaskList`
-  6. Give `DeleteButton` a new `click` prop  to pass in the `deleteTask` action. 
-  7. Your child `DeleteButton` won't yet work, but `App` should look like this:
+>#####Stop and Think
+>Since our children are simply `<a/>` tags, you might be tempted to skip the creation of a new component, and just use an `<a/>` tag, but you'd be running into a world of issues: 
+  1. How would we be able intercept the click from the link? We'd be moving the responsibility of managing the event propagation to some other component, making our app much more complex and sloppy.
+  2. Even though a naked (non-component) `<a/>` tag is legal here, we'd be missing out on the opportunity to treat all our icon links exactly the same way. 
 
+####You Do:
+  1. Create a new stateless component called `IconButton.jsx` (Use one of the delete html links from `layout.html`).
+  2. Within the `IconButton` function, create another function, `handleClick(event)`, that will intercept the click and prevent both the link and the button from being pressed simultaneously (`event.stopPropagation()`), and then fire the click event passed in by props using our current `props.id`. 
+  5. Include your newly-minted `IconButton` as a child of `TaskList`
+  6. Give `IconButton` a new `click` prop  to pass in the `toggleDelete` action. 
+  7. Your child `IconButton` won't yet work, but `App` should look like this:
+
+>Like the form, we want to stop the event propagation. Why, you ask? If you remember back to JS 101, events b and fire the `click` provided by the props (we'll cover the click event next).
+  
 ```javascript
 ...
   {/* COMPLETED ITEMS */}
@@ -164,7 +168,7 @@ The nested child JSX is referenced by the parent as `props.children`. To build o
       filter={task=>!!task.completed&&!task.deleted }
       buttonClick={this.toggleTask.bind(this)}>
 
-      <DeleteButton click={this.deleteTask.bind(this)} />
+      <IconButton click={this.toggleDelete.bind(this)} />
     
     </TaskList>
   </article>
@@ -173,7 +177,7 @@ The nested child JSX is referenced by the parent as `props.children`. To build o
 ##Step 4. Passing Child Nodes
 
 ###TaskList is actually a `button` (Task) Factory
-In the steps above, we've successfully wired up the JSX, and passed the appropriate props to our components, but it still doesn't work properly. If you look closely inside the `TaskList`, you'll see that its primary goal is to iterate over `state.tasks` and generate new `Task`s (buttons)... or even `DeleteButton`s.
+In the steps above, we've successfully wired up the JSX, and passed the appropriate props to our components, but it still doesn't work properly. If you look closely inside the `TaskList`, you'll see that its primary goal is to iterate over `state.tasks` and generate new `Task`s (buttons)... or even `IconButton`s.
 
 >Technically, this creational pattern is called a [Factory Pattern](https://en.wikipedia.org/wiki/Factory_(object-oriented_programming)), wherein we have a method that generates other objects. From the point of view of the `App`, `TaskList` is a [black box](https://en.wikipedia.org/wiki/Black_box): we give it as input some raw ingredients, and it outputs some useful, decorated objects. The key to this pattern is that we didn't tell the factory _how_ to create the object, just gave it some stuff to build.
 
@@ -188,14 +192,14 @@ const TaskList = props=>
 
   <div className="list-group">
     {Object.keys(props.tasks)
-      .filter( task_id=>props.filter(props.tasks[task_id]) )
-      .map(task_id=>
+      .filter( taskID=>props.filter(props.tasks[taskID]) )
+      .map(taskID=>
         <Task
-          key={task_id}
-          onClick={event=>props.buttonClick(task_id)}
-          task={props.tasks[task_id]}>
+          key={taskID}
+          onClick={event=>props.buttonClick(taskID)}
+          task={props.tasks[taskID]}>
 
-          /* WRONG; Our child's click event isn't bound to **this** task_id */
+          /* WRONG; Our child's click event isn't bound to **this** taskID */
           {props.children}
         </Task>
       )}
@@ -203,9 +207,9 @@ const TaskList = props=>
 
 ```
 
->This code has a serious problem; our `deleteTask` function has no idea about the `task_id` of the button it's sitting on. In order to work as expected, `deleteClick` (like `buttonClick`) needs a specific `task_id` to operate. 
+>This code has a serious problem; our `deleteTask` function has no idea about the `taskID` of the button it's sitting on. In order to work as expected, `deleteClick` (like `buttonClick`) needs a specific `taskID` to operate. 
 
-Like `onClick`, we should wrap `deleteTask` in another function to capture this current `task_id` (actually creates a closure around each `task_id`). However, `props.children` is _immutable_ (READ-ONLY), so we can't change any of its props or events. In order to modify these kids, we need to clone them.
+Like `onClick`, we should wrap `deleteTask` in another function to capture this current `taskID` (actually creates a closure around each `taskID`). However, `props.children` is _immutable_ (READ-ONLY), so we can't change any of its props or events. In order to modify these kids, we need to clone them.
 
 
 ##Step 6. Cloning Child Nodes
@@ -234,15 +238,15 @@ const TaskList = props=>
 
   <div className="list-group">
     {Object.keys(props.tasks)
-      .filter( task_id=> props.filter(props.tasks[task_id]) )
-      .map( task_id=>
+      .filter( taskID=> props.filter(props.tasks[taskID]) )
+      .map( taskID=>
 
         <Task
-          key={task_id}
-          onClick={event=>props.buttonClick(task_id)}
-          task={props.tasks[task_id]}>
+          key={taskID}
+          onClick={event=>props.buttonClick(taskID)}
+          task={props.tasks[taskID]}>
 
-          {cloneAndAssignClickHandler(props.children, task_id)}
+          {cloneAndAssignClickHandler(props.children, taskID)}
 
         </Task>
       )}
@@ -252,5 +256,5 @@ export default TaskList
 ```
 >Note `props.children` is an [opaque data structure](https://facebook.github.io/react/docs/top-level-api.html#react.children), meaning that it may be an array or object. We use `React.Children.map` to help us iterate over 0..n children without an error.
 
-In keeping things tidy, we've exiled our cloning operation and exposed only what is necessary, the ref to the `props.children` and the current`task_id`. **This will effectively "modify" our child by updating its `click` to a function that is bound by our current `task_id`.**
+In keeping things tidy, we've exiled our cloning operation and exposed only what is necessary, the ref to the `props.children` and the current`taskID`. **This will effectively "modify" our child by updating its `click` to a function that is bound by our current `taskID`.**
 
