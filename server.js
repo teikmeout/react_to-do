@@ -14,12 +14,22 @@ const app           = express();
 
 const PORT          = process.argv[2] || process.env.PORT || 3000;
 
+// setting routes
+const homeRoute     = require('./routes/home');
+const tasksRoute    = require('./routes/tasks');
+
 app.listen(PORT, () => console.log(`server RUNNIN on port ${PORT}`));
 
 app.use(logger(isDev ? 'dev' : 'common'));
 
 // this is to only accept json in our local API
 app.use(bodyParser.json());
+
+// Starting routes
+// home route
+app.use('/', homeRoute);
+// tasks route
+app.use('/tasks', tasksRoute);
 
 // generic error handler
 app.use((err, req, res, next) => {
