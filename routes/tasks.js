@@ -1,11 +1,23 @@
-const router = require('express').Router();
+const tasks = require('express').Router();
 
-router.get('/tasks', (req, res) => {
-  res.json('inside tasks GET');
-});
+const showMethod = (req, res) => res.json(`${req.method} tasks/${req.params.taskID}`);
 
-router.post('/tasks', (req, res) => {
-  res.json('inside tasks POST');
-});
+// in order of specificity so it catches it first if it has an ID
+tasks.route('/:taskId')
+  .get(showMethod)
+  .put(showMethod)
+  .delete(showMethod);
 
-module.exports = router;
+tasks.route('/')
+  .get(showMethod)
+  .post(showMethod)
+
+// router.get('/tasks', (req, res) => {
+//   res.json('inside tasks GET');
+// });
+
+// router.post('/tasks', (req, res) => {
+//   res.json('inside tasks POST');
+// });
+
+module.exports = tasks;
