@@ -16,6 +16,3 @@ rules:
     - exceptions:
         VariableDeclarator: true
   import/no-extraneous-dependencies: 0
-
-
-
