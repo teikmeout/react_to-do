@@ -15,4 +15,5 @@ rules:
     - error
     - exceptions:
         VariableDeclarator: true
+        ImportDeclaration: true
   import/no-extraneous-dependencies: 0

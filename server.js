@@ -4,6 +4,7 @@
 const express     = require('express');
 const bodyParser  = require('body-parser');
 const logger      = require('morgan');
+const path        = require('path');
 
 // This tests to see if we have NODE_ENV in our environment.
 // Only load the dotenv if we need it.
@@ -20,13 +21,14 @@ app.use(bodyParser.json());
 
 // bring in the task routes
 app.use('/tasks', require('./routes/tasks'));
-app.use('/', require('./routes/index'));
 
 // generic error handler
 app.use((err, req, res, next) => {
   console.error(err, next);
   res.status(500).send('Something broke!');
 });
+
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // Let's go!
 app.listen(PORT);
